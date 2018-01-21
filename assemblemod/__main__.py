@@ -2,7 +2,7 @@ import sys
 import traceback
 from time import sleep
 import argparse
-from assemble_mod import assembler
+from assemblemod import assembler
 
 PARSER = argparse.ArgumentParser(fromfile_prefix_chars='@')
 PARSER.add_argument(

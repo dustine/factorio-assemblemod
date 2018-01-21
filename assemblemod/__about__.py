@@ -12,7 +12,7 @@ except NameError:
     base_dir = None
 
 
-__title__ = "assemble_mod"
+__title__ = "assemblemod"
 __summary__ = "Run/Package Factorio Mod"
 __uri__ = ""
 
