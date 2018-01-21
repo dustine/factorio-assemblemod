@@ -1,6 +1,5 @@
 import sys
 import traceback
-# import os
 from time import sleep
 import argparse
 from assemble_mod import assembler
