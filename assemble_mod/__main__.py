@@ -2,11 +2,12 @@ import sys
 import traceback
 from time import sleep
 import argparse
-from assemblemod import assembler
+from assemble_mod import assembler
 
 PARSER = argparse.ArgumentParser(fromfile_prefix_chars='@')
+PARSER.add_argument('directory', metavar='mod', help='mod directory')
 PARSER.add_argument(
-    'directory', metavar='mod', help='mod directory')
+    '--deploy', action='store_true', help='makes zip from HEAD (needs git)')
 PARSER.add_argument(
     '-s',
     '--silent',
@@ -17,15 +18,17 @@ PARSER.add_argument(
     '--verbose',
     action='count',
     help='log verbosity (-vv for script too)')
-deploy = PARSER.add_mutually_exclusive_group()
-deploy.add_argument(
-    '--deploy', action='store_true', help='makes zip from commit (needs git)')
-deploy.add_argument(
+PARSER.add_argument(
+    '-r',
+    '--reset',
+    action='count',
+    help='clears the mod cache, -r resets config, -rr erases mod loadout, -rrr resets *everything*')
+PARSER.add_argument(
     '-m',
     '--multiplayer',
     action='count',
+    default=0,
     help='starts mp test (-mmm... = m users)')
-
 
 def run():
     # Argv Parser

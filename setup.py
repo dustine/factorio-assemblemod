@@ -11,7 +11,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 about = {}
-with open(path.join(here, 'assemblemod', '__about__.py')) as fp:
+with open(path.join(here, 'assemble-mod', '__about__.py')) as fp:
     exec(fp.read(), about)
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -60,7 +60,7 @@ setup(
     # executes the function `main` from this package when invoked:
     entry_points={  # Optional
         'console_scripts': [
-            'assemblemod=assemblemod.__main__:run',
+            'assemblemod=assemble_mod.__main__:run',
         ],
     },
 )
