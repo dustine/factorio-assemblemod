@@ -1,6 +1,0 @@
-{
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.formatting.provider": "yapf",
-    "python.pythonPath": "/home/dustine/.virtualenvs/assemble_mod-k21e_3vp/bin/python"
-}
