@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 import colorama
-# import semver
+import semver
 
 path = os.path
 Fore = colorama.Fore
@@ -144,8 +144,11 @@ def run(directory, verbose, **args):
     arguments = [
         path.join(factorio_path, 'bin', 'x64', 'factorio'), '-c', config_path,
         '--mod-directory',
-        path.dirname(mod_path), '--enable-runtime-autoplace-modification'
+        path.dirname(mod_path)
     ]
+    
+    if semver.match(factorio_info['version'], ">=0.16.0"):
+        arguments.append('--enable-runtime-autoplace-modification')
     if verbose > 0:
         arguments.append('--verbose')
         logging.info("Factorio verbose logging on")
