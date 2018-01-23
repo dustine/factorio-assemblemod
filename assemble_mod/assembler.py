@@ -9,6 +9,7 @@ import subprocess
 import sys
 
 import colorama
+# import semver
 
 path = os.path
 Fore = colorama.Fore
@@ -18,8 +19,6 @@ colorama.init(autoreset=True)
 
 def run(directory, verbose, **args):
     source = os.getcwd()
-    if source in args:
-        source = args['source']
     # directory = path.abspath(directory)
 
     # load mod's info.json
@@ -30,6 +29,30 @@ def run(directory, verbose, **args):
                  info['name'], info['version'], Fore.RESET,
                  info['factorio_version'])
     logging.debug(info)
+
+    # find target factorio and load its info.json
+    if source in args:
+        source = args['source']
+        # fail deadly if it's an invalid source
+        factorio_path = path.join(source, source,
+                                  'factorio-' + info['factorio_version'])
+    else:
+        source = os.getcwd()
+        while source:
+            logging.debug(source)
+            factorio_path = path.join(source,
+                                      'factorio-' + info['factorio_version'])
+            factorio_info_path = path.join(factorio_path, 'data', 'base',
+                                           'info.json')
+            if path.exists(factorio_info_path) or source == path.dirname(
+                    source):
+                break
+            source = path.dirname(source)
+
+    with open(path.join(factorio_path, 'data', 'base', 'info.json')) as fif:
+        factorio_info = json.load(fif)
+    logging.info("Loaded Factorio %s", factorio_info['version'])
+    logging.debug("Factorio base info: %s", factorio_info)
 
     id = "{}_{}".format(info['name'], info['version'])
     cache_path = path.join(source, ".cache", info['name'])
@@ -114,17 +137,10 @@ def run(directory, verbose, **args):
         _winapi.CreateJunction(path.abspath(directory), path.abspath(mod_path))
         logging.info("Junction created for %s → %s", directory, mod_path)
     else:
-        os.symlink(directory, mod_path)
+        os.symlink(path.abspath(directory), path.abspath(mod_path))
         logging.info("Symlink created for %s → %s", directory, mod_path)
 
     # run the game, showing log on console
-    factorio_path = path.join(source, source,
-                              'factorio-' + info['factorio_version'])
-    with open(path.join(factorio_path, 'data', 'base', 'info.json')) as fif:
-        factorio_info = json.load(fif)
-    logging.info("Loaded Factorio %s", factorio_info['version'])
-    logging.debug("Factorio base info: %s", factorio_info)
-
     arguments = [
         path.join(factorio_path, 'bin', 'x64', 'factorio'), '-c', config_path,
         '--mod-directory',
@@ -144,4 +160,5 @@ def run(directory, verbose, **args):
 
 
 def abort():
+    logging.warning("Keyboard interrupt")
     pass

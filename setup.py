@@ -50,6 +50,9 @@ setup(
 
     keywords='factorio setup',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    install_requires=[
+        'colorama', 'semver'
+    ],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow

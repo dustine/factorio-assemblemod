@@ -1,18 +1,15 @@
 [[source]]
 
-name = "pypi"
 url = "https://pypi.python.org/simple"
+name = "pypi"
 verify_ssl = true
 
 
 [packages]
 
-argparse = "*"
+colorama = "*"
+semver = "*"
 
 
 [dev-packages]
 
-"flake8" = "*"
-"autopep8" = "*"
-yapf = "*"
-rope = "*"
